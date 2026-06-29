@@ -135,7 +135,13 @@ if st.button("Prediksi Credit Score", use_container_width=True, type="primary"):
     }
 
     try:
-        client = boto3.client("sagemaker-runtime", region_name=REGION)
+        client = boto3.client(
+            "sagemaker-runtime",
+            region_name=REGION,
+            aws_access_key_id=st.secrets["aws"]["aws_access_key_id"],
+            aws_secret_access_key=st.secrets["aws"]["aws_secret_access_key"],
+            aws_session_token=st.secrets["aws"]["aws_session_token"],
+        )
         response = client.invoke_endpoint(
             EndpointName=ENDPOINT_NAME,
             ContentType="application/json",
